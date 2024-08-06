@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myapp/src/presentation/providers/pokemons_providers.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -42,21 +44,35 @@ class PokedexBackground extends StatelessWidget {
   }
 }
 
-class PokedexPanel extends StatelessWidget {
+class PokedexPanel extends ConsumerWidget {
   const PokedexPanel({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final pokemons = ref.watch(pokemonsProvider);
+
     return Center(
       child: Container(
-        margin: EdgeInsets.only(bottom: 50),
-        color: Colors.white,
-        height: MediaQuery.of(context).size.height * 0.4,
-        width: MediaQuery.of(context).size.width * 0.8,
-        child: const Center(
-          child: Text('pene'),
-        ),
-      ),
+          margin: const EdgeInsets.only(bottom: 50),
+          color: Colors.white,
+          height: MediaQuery.of(context).size.height * 0.4,
+          width: MediaQuery.of(context).size.width * 0.8,
+          child: Center(
+            child: pokemons.when(
+              data: (pokemonsList) => ListView.builder(
+                itemCount: pokemonsList.length,
+                itemBuilder: (context, index) {
+                  final pokemon = pokemonsList[index];
+                  return ListTile(
+                    leading: Image.network(pokemon.imageUrl,width: 100,height: 100,),
+                    title: Text(pokemon.name),
+                  );
+                },
+              ),
+              error: (_,__) => const Text('Error'),
+              loading: () => const CircularProgressIndicator(),
+            ),
+          )),
     );
   }
 }
