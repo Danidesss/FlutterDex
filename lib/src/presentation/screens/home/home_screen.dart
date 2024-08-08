@@ -2,31 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/src/presentation/providers/pokemons_providers.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const SafeArea(
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SafeArea(
       child: Scaffold(
         // appBar: AppBar(title: const Text('Flutter Dex App')),
         body: Stack(
           children: [
-            PokedexBackground(),
-            PokedexPanel(),
+            const PokedexBackground(),
+            IndexedStack(
+              index: ref.watch(pokedexIndexProvider),
+              children: const [
+                PokedexListPanel(),
+                PokedexDetailedPanel(),
+              ],
+            ),
           ],
         ),
       ),
     );
-  }
-}
-
-class HomeScreenList extends StatelessWidget {
-  const HomeScreenList({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold();
   }
 }
 
@@ -44,8 +41,8 @@ class PokedexBackground extends StatelessWidget {
   }
 }
 
-class PokedexPanel extends ConsumerWidget {
-  const PokedexPanel({super.key});
+class PokedexListPanel extends ConsumerWidget {
+  const PokedexListPanel({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -64,14 +61,42 @@ class PokedexPanel extends ConsumerWidget {
                 itemBuilder: (context, index) {
                   final pokemon = pokemonsList[index];
                   return ListTile(
-                    leading: Image.network(pokemon.imageUrl,width: 100,height: 100,),
+                    leading: Image.network(
+                      pokemon.imageUrl,
+                      width: 100,
+                      height: 100,
+                    ),
                     title: Text(pokemon.name),
+                    onTap: () {
+                      ref.read(pokeballProvider.notifier).catchPokemon(pokemon);
+                      ref.read(pokedexIndexProvider.notifier).changeIndex(1);
+                    },
                   );
                 },
               ),
-              error: (_,__) => const Text('Error'),
+              error: (_, __) => const Text('Error'),
               loading: () => const CircularProgressIndicator(),
             ),
+          )),
+    );
+  }
+}
+
+class PokedexDetailedPanel extends ConsumerWidget {
+  const PokedexDetailedPanel({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedPokemon = ref.watch(pokeballProvider);
+
+    return Center(
+      child: Container(
+          margin: const EdgeInsets.only(bottom: 50),
+          color: Colors.white,
+          height: MediaQuery.of(context).size.height * 0.4,
+          width: MediaQuery.of(context).size.width * 0.8,
+          child: Center(
+            child: Text(selectedPokemon.name),
           )),
     );
   }
