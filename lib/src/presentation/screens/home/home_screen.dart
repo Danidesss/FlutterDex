@@ -82,6 +82,7 @@ class PokedexListPanel extends ConsumerWidget {
   }
 }
 
+//Quiero que el widget tenga un boton arriba a la izquierda que me regrese a la lista nuevamente
 class PokedexDetailedPanel extends ConsumerWidget {
   const PokedexDetailedPanel({super.key});
 
@@ -90,14 +91,44 @@ class PokedexDetailedPanel extends ConsumerWidget {
     final selectedPokemon = ref.watch(pokeballProvider);
 
     return Center(
-      child: Container(
-          margin: const EdgeInsets.only(bottom: 50),
-          color: Colors.white,
-          height: MediaQuery.of(context).size.height * 0.4,
-          width: MediaQuery.of(context).size.width * 0.8,
-          child: Center(
-            child: Text(selectedPokemon.name),
-          )),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(
+            margin: const EdgeInsets.only(bottom: 50),
+            color: Colors.white,
+            height: MediaQuery.of(context).size.height * 0.4,
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: Center(
+              child: Column(
+                children: [
+                  Image.network(
+                    selectedPokemon.imageUrl,
+                    width: 200,
+                    height: 200,
+                  ),
+                  
+                  Text(
+                    selectedPokemon.name,
+                    style: TextStyle(fontSize: 24),
+                  ),
+                  Text('Pokemon Id:  ${selectedPokemon.id}'),
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 60,
+            right: 10,
+            child: FloatingActionButton(
+              child: const Icon(Icons.arrow_back),
+              onPressed: () {
+                ref.read(pokedexIndexProvider.notifier).changeIndex(0);
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
