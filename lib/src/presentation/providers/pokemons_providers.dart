@@ -22,7 +22,7 @@ Future<PokemonRepositoryImpl> pokemonsRepository(
 @Riverpod(keepAlive: true)
 class Pokeball extends _$Pokeball {
   @override
-  Pokemon build() => Pokemon(id: 0, name: '', imageUrl: '');
+  Pokemon build() => Pokemon(id: 0, name: '', imageUrl: '',);
   void catchPokemon(Pokemon pokemon) => state = pokemon;
 }
 

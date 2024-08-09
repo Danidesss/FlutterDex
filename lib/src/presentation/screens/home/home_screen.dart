@@ -82,7 +82,7 @@ class PokedexListPanel extends ConsumerWidget {
   }
 }
 
-//Quiero que el widget tenga un boton arriba a la izquierda que me regrese a la lista nuevamente
+
 class PokedexDetailedPanel extends ConsumerWidget {
   const PokedexDetailedPanel({super.key});
 
@@ -103,14 +103,14 @@ class PokedexDetailedPanel extends ConsumerWidget {
               child: Column(
                 children: [
                   Image.network(
-                    selectedPokemon.imageUrl,
+                    selectedPokemon.imageUrl, fit: BoxFit.cover,
                     width: 200,
                     height: 200,
                   ),
                   
                   Text(
                     selectedPokemon.name,
-                    style: TextStyle(fontSize: 24),
+                    style: const TextStyle(fontSize: 24),
                   ),
                   Text('Pokemon Id:  ${selectedPokemon.id}'),
                 ],
