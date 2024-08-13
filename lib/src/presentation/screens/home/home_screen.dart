@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myapp/src/infrastructure/datasources/mock_pokemons_datasource_impl.dart';
+
 import 'package:myapp/src/presentation/providers/pokemons_providers.dart';
 
 class HomeScreen extends ConsumerWidget {
