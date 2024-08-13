@@ -8,7 +8,8 @@ final List<Pokemon> mockPokemons = [
   Pokemon(name: 'Pikachu', imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png', id: 25,),
   Pokemon(name: 'Ratata', imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/19.png', id: 19,),
   Pokemon(name: 'Squirtle', imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png', id: 7,),
-  
+  Pokemon(name: 'Eevee', imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/133.png', id: 133,),
+  Pokemon(name: 'Mewtwo', imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/150.png', id: 150,),
 
 
 

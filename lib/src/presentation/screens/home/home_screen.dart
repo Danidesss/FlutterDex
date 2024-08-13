@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myapp/src/infrastructure/datasources/mock_pokemons_datasource_impl.dart';
 import 'package:myapp/src/presentation/providers/pokemons_providers.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -82,7 +83,6 @@ class PokedexListPanel extends ConsumerWidget {
   }
 }
 
-
 class PokedexDetailedPanel extends ConsumerWidget {
   const PokedexDetailedPanel({super.key});
 
@@ -103,11 +103,11 @@ class PokedexDetailedPanel extends ConsumerWidget {
               child: Column(
                 children: [
                   Image.network(
-                    selectedPokemon.imageUrl, fit: BoxFit.cover,
+                    selectedPokemon.imageUrl,
+                    fit: BoxFit.cover,
                     width: 200,
                     height: 200,
                   ),
-                  
                   Text(
                     selectedPokemon.name,
                     style: const TextStyle(fontSize: 24),
@@ -127,6 +127,7 @@ class PokedexDetailedPanel extends ConsumerWidget {
               },
             ),
           ),
+          
         ],
       ),
     );
